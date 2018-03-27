@@ -12,20 +12,18 @@
 
 <style scoped>
 .body-bg {
-    background-image: url("../assets/main.jpg");
+    /* background-image: url("../assets/main.jpg"); */
     width: 100vw;
     height: 100vh;
-     background-position: center;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.5;
-    /* position: relative; */
+    background: rgba(255,255,255,.5);
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 .main-logo{
-    /* position: absolute; */
     width: 50%;
     height:75%;
     /* top: 10%;
@@ -33,6 +31,7 @@
     background-color: grey;
     border-radius: 10px;
     margin: 5% 0 0 10%;
+    opacity: 0.9;
 }
 .main-sign-in {
     /* position: absolute; */
@@ -62,5 +61,6 @@
     justify-content: space-between;
     margin-left: 5%;
     margin-top: 5%;
+    opacity: 0.9;
 }
 </style>
