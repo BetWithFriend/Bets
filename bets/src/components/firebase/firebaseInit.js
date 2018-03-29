@@ -1,8 +1,7 @@
 import firebase from 'firebase'
-import 'firebase/firebase-firestore'
-import 'firebase/firebase-auth'
+import 'firebase/firestore'
 import firebaseConfig from './firebaseConfig'
 
-const firebaseApp = firebase.initializeApp(firebaseConfig.dev)
+const firebaseApp = firebase.initializeApp(firebaseConfig)
 
 export default firebaseApp.firestore()
