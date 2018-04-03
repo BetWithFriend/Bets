@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Dashboard from '@/components/Dashboard'
 import firebase from 'firebase'
 import '@/assets/css/style.css'
+import Home from '@/components/Home'
+import Dashboard from '@/components/Dashboard'
+import Leagues from '@/components/Leagues'
+import AddLeague from '@/components/AddLeague'
+
 
 Vue.use(Router)
 
@@ -23,6 +26,22 @@ let router = new Router({
       component: Home,
       meta: {
         requiresGuest: true
+      }
+    },
+    {
+      path: '/leagues',
+      name: 'Leagues',
+      component: Leagues,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/leagues/add',
+      name: 'add-league',
+      component: AddLeague,
+      meta: {
+        requiresAuth: true
       }
     },
   ]
