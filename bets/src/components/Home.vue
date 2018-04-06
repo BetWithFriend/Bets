@@ -1,66 +1,75 @@
 <template>
-  <div class="vertical-center">
-    <div class="container">
-        <div class="row flex">
-            <div class="col s4 push-s8">
-                <div class="login card-panel grey lighten-4 black-text center">
-                    <h4>Login</h4>
-                    <form action="index.html">
-                        <div class="input-field">
-                            <i class="material-icons prefix">email</i>
-                            <input type="email" id="email" v-model="email">
-                            <label for="email">Email Address</label>
-                        </div>
-                        <div class="input-field">
-                            <i class="material-icons prefix">lock</i>
-                            <input type="password" id="password" v-model="password">
-                            <label for="password">Password</label>
-                        </div>
-                        <button v-on:click="login" class="btn btn-large btn-extended grey lighten-4 black-text">Login</button>
-                    </form>
+    <div class="vertical-center">
+        <div class="container">
+            <div class="row flex">
+                <div class="col s4 push-s8">
+                    <div class="login card-panel grey lighten-4 black-text center">
+                        <h4>Login</h4>
+                        <form action="index.html">
+                            <div class="input-field">
+                                <i class="material-icons prefix">email</i>
+                                <input type="email" id="loginEmail" v-model="loginEmail">
+                                <label for="loginEmail">Email Address</label>
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock</i>
+                                <input type="password" id="loginPassword" v-model="loginPassword">
+                                <label for="loginPassword">Password</label>
+                            </div>
+                            <button v-on:click="login" class="btn btn-large btn-extended grey lighten-4 black-text">Login</button>
+                        </form>
                     </div>
 
-                <div class="login card-panel grey lighten-4 black-text center">
-                    <h4>Register</h4>
-                    <form action="index.html">
-                        <div class="input-field">
-                            <i class="material-icons prefix">email</i>
-                            <input type="email" id="email" v-model="email">
-                            <label for="email">Email Address</label>
-                        </div>
-                        <div class="input-field">
-                            <i class="material-icons prefix">lock</i>
-                            <input type="password" id="password" v-model="password">
-                            <label for="password">Password</label>
-                        </div>
-                        <button v-on:click="register" class="btn btn-large btn-extended grey lighten-4 black-text">Register</button>
-                    </form>
+                    <div class="login card-panel grey lighten-4 black-text center">
+                        <h4>Register</h4>
+                        <form action="index.html">
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock</i>
+                                <input type="text" id="registerUsername" v-model="registerUsername">
+                                <label for="registerUsername">Username</label>
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">email</i>
+                                <input type="email" id="registerEmail" v-model="registerEmail">
+                                <label for="registerEmail">Email Address</label>
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock</i>
+                                <input type="password" id="registerPassword" v-model="registerPassword">
+                                <label for="registerPassword">Password</label>
+                            </div>
+                            <button v-on:click="register" class="btn btn-large btn-extended grey lighten-4 black-text">Register</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="col s8 pull-s4 login card-panel grey lighten-4 black-text center">
+                <div class="col s8 pull-s4 login card-panel grey lighten-4 black-text center">
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
-import firebase from 'firebase';
-import db from './firebase/firebaseInit'
+import firebase from "firebase";
+import db from "./firebase/firebaseInit";
+import dbTables from "./firebase/firebaseTables";
 
 export default {
-  name: 'home',
+  name: "home",
   data: function() {
     return {
-      email: '',
-      password: ''
+      loginEmail: "",
+      loginPassword: "",
+      registerUsername: "",
+      registerEmail: "",
+      registerPassword: ""
     };
   },
   methods: {
     login: function(e) {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
         .then(
           user => {
             this.$router.go({ path: this.$router.path });
@@ -72,17 +81,48 @@ export default {
       e.preventDefault();
     },
     register: function(e) {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-            .then(user => {
-                // console.log(user);
-                alert(`Account Created for ${user.email}`);
-                this.$router.go({ path: this.$router.path });
-            },
-            err => {
-                alert(err.message);
-            }
-            );
-        e.preventDefault();
+      db
+        .collection(dbTables.USERS)
+        .where("name", "==", this.registerUsername)
+        .get()
+        .then(doc => {
+          if (doc.size > 0) {
+            alert("The username '" + this.registerUsername + "' is occupied, please chose another name");
+          } else {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(
+                this.registerEmail,
+                this.registerPassword
+              )
+              .then(
+                user => {
+                  db
+                    .collection("users")
+                    .add({
+                      email: user.email,
+                      uid: user.uid,
+                      name: this.registerUsername
+                    })
+                    .then(docRef => {
+                      console.log("user added: ", docRef.id);
+                      this.$router.go({ path: this.$router.path });
+                    })
+                    .catch(error => {
+                      console.error("Error adding user: ", error);
+                    });
+                },
+                err => {
+                  alert(err.message);
+                }
+              );
+          }
+        })
+        .catch(error => {
+          console.log("Error getting document:", error);
+        });
+
+      e.preventDefault();
     }
   }
 };

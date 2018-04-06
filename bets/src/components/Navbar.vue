@@ -36,7 +36,7 @@ export default {
       this.isLoggedIn = true;
       this.currentUser = firebase.auth().currentUser.email;
 
-      if (this.currentUser = "yanayh90@gmail.com") {
+      if (this.currentUser == "yanayh90@gmail.com") {
         this.isAdmin = true;
       }
     }

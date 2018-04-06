@@ -11,6 +11,7 @@ import AddLeague from '@/components/AddLeague'
 Vue.use(Router)
 
 let router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/dashboard',
