@@ -3,12 +3,12 @@
     <ul class="collection with-header">
       <li class="collection-header"><h4>Leagues</h4></li>
       <li v-for="league in leagues" v-bind:key="league.id" class="collection-item">
-       
-         <router-link v-bind:to="{ name: 'leagues', params: { league_id: league.id }}">{{league.name}} </router-link>
+        <!-- <router-link to="/dashboard">{{league.name}} </router-link> -->
+         <router-link v-bind:to="{ name: 'ViewLeague', params: { leagueId: league.id }}">{{league.name}}</router-link>
       </li>
     </ul>
     <div class="fixed-action-btn">
-      <router-link to="/leagues/add" class="btn-floating btn-large red">
+      <router-link v-bind:to="{ name: 'AddLeague'}" class="btn-floating btn-large red">
         <i class="fa fa-plus"></i>
       </router-link>
     </div>

@@ -6,7 +6,7 @@ import Home from '@/components/Home'
 import Dashboard from '@/components/Dashboard'
 import Leagues from '@/components/Leagues'
 import AddLeague from '@/components/AddLeague'
-
+import ViewLeague from '@/components/ViewLeague'
 
 Vue.use(Router)
 
@@ -38,8 +38,16 @@ let router = new Router({
       }
     },
     {
+      path: '/leagues/:leagueId',
+      name: 'ViewLeague',
+      component: ViewLeague,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/leagues/add',
-      name: 'add-league',
+      name: 'AddLeague',
       component: AddLeague,
       meta: {
         requiresAuth: true
