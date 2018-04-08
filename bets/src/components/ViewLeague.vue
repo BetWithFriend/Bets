@@ -3,9 +3,14 @@
         <ul class="collection with-header">
             <li class="collection-header">
                 <h4>{{name}}</h4>
-                <h6 class="small">ID#: {{leagueId}}</h6>
+                <div class="small">ID#: {{leagueId}}
+                    <div>
+                        <button @click="joinLeague" class="btn right blue">Join</button>
+                    </div>
+                </div>
+
             </li>
-            <!-- <li class="collection-item">League ID#: {{leagueId}}</li> -->
+            <li class="collection-item">League ID#: {{leagueId}}</li>
         </ul>
         <router-link to="/leagues" class="btn grey">Back</router-link>
         <button @click="deleteLeague" class="btn red">Delete</button>
@@ -19,6 +24,7 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 import db from "./firebase/firebaseInit";
 import dbTables from "./firebase/firebaseTables";
 
@@ -61,9 +67,24 @@ export default {
           .doc(this.$route.params.leagueId)
           .onSnapshot(doc => {
             doc.ref.delete();
-            this.$router.push({ name: 'Leagues' });
+            this.$router.push({ name: "Leagues" });
           });
       }
+    },
+    joinLeague() {
+        const currentUser = firebase.auth().currentUser
+
+        db.collection(dbTables.USERS_IN_LEAGUES)
+        .where(leagueId, '==', this.$route.params.leagueId)
+        .where(currentUser.id, '==', userId).get()
+        .then(doc => {
+          if (doc.size > 0) {
+              alert(currentUser.name + ' is alreay exist in this league')
+          } else {
+              
+          }
+            this.leagues.push(data)
+        })
     }
   }
 };

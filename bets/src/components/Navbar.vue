@@ -5,7 +5,7 @@
           <router-link to="/" class="brand-logo">Worldcup 2018 Shutterfly</router-link>    
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-            <li v-if="isLoggedIn"><span class="email black-text">{{currentUser}}</span></li>
+            <li v-if="isLoggedIn"><span class="email black-text">{{currentUser.name}}</span></li>
             <li v-if="isAdmin"><router-link to="/leagues">Leagues</router-link></li>
             <li v-if="isLoggedIn"><button v-on:click="logout" class="btn black">Logout</button></li>
           </ul>
@@ -21,22 +21,23 @@
 
 <script>
 import firebase from 'firebase';
+import { sharedSettings , fetchUser } from '@/components/sharedSettings'
+
 export default {
   name: 'navbar',
   
   data() {
     return {
-      isLoggedIn: false,
+      isLoggedIn: true,
       currentUser: false,
       isAdmin: false,
     };
   },
   created() {
-    if (firebase.auth().currentUser) {
+    if (sharedSettings.currentUser) {
       this.isLoggedIn = true;
-      this.currentUser = firebase.auth().currentUser.email;
-
-      if (this.currentUser == "yanayh90@gmail.com") {
+      this.currentUser =  sharedSettings.currentUser;
+      if (this.currentUser.email == "yanayh90@gmail.com") {
         this.isAdmin = true;
       }
     }

@@ -5,19 +5,29 @@ import App from './App'
 import router from './router'
 import firebase from 'firebase'
 import './components/firebase/firebaseInit'
+import {
+  sharedSettings,
+  fetchUser,
+} from '@/components/sharedSettings'
 
 Vue.config.productionTip = false
 
 let app
 
 firebase.auth().onAuthStateChanged(user => {
+
   if (!app) {
     app = new Vue({
       el: '#app',
       router,
-      components: { App },
-      template: '<App/>'
-    })    
+      components: {
+        App
+      },
+      template: '<App/>',
+      beforeCreate: function () {
+      },
+      created: function () {
+      }
+    })
   }
 })
-

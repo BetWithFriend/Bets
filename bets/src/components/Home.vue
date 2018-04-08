@@ -87,7 +87,7 @@ export default {
         .get()
         .then(doc => {
           if (doc.size > 0) {
-            alert("The username '" + this.registerUsername + "' is occupied, please chose another name");
+            alert("The username " + this.registerUsername + " is occupied, please chose another name");
           } else {
             firebase
               .auth()
@@ -99,13 +99,15 @@ export default {
                 user => {
                   db
                     .collection("users")
-                    .add({
+                    .doc(user.uid)
+                    .set({
                       email: user.email,
                       uid: user.uid,
-                      name: this.registerUsername
+                      name: this.registerUsername,
+                      leagues: ['99lgJTKgwWiGdE1YuJ7w']
                     })
                     .then(docRef => {
-                      console.log("user added: ", docRef.id);
+                      console.log("user added: ", user.uid);
                       this.$router.go({ path: this.$router.path });
                     })
                     .catch(error => {
