@@ -35,6 +35,8 @@ export default {
   },
   created() {
     if (sharedSettings.currentUser) {
+      console.log(sharedSettings.currentUser)
+      debugger
       this.isLoggedIn = true;
       this.currentUser =  sharedSettings.currentUser;
       if (this.currentUser.email == "yanayh90@gmail.com") {

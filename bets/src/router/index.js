@@ -64,7 +64,6 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
 
   const firebaseUser = firebase.auth().currentUser
-
   console.log('1')
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -76,12 +75,18 @@ router.beforeEach((to, from, next) => {
         next();
       } else {
         console.log('5')
-        fetchUser(firebaseUser.uid, function () {
+        fetchUser(firebaseUser.uid)
+        .then(() => {
           console.log('6')
-          next();
-        })
-      }
-    } else {
+          next({
+            path: '/dashboard',
+            query: {
+              redirect: to.fullPath
+            }
+          });
+      })
+    }
+   } else {
       console.log('7')
       next({
         path: '/',
@@ -104,7 +109,8 @@ router.beforeEach((to, from, next) => {
         });
       } else {
         console.log('11')
-        fetchUser(firebaseUser.uid, function () {
+        fetchUser(firebaseUser.uid)
+        .then(() => {
           console.log('12')
           next({
             path: '/dashboard',
@@ -112,9 +118,9 @@ router.beforeEach((to, from, next) => {
               redirect: to.fullPath
             }
           });
-        })
-      }
-    } else {
+      })
+    }
+   } else {
       console.log('13')
       // Proceed to route
       next();

@@ -5,20 +5,23 @@ import dbTables from "./firebase/firebaseTables";
 
 var isUserLoaded = false;
 
-function fetchUser(userId, next) {
-    db
-    .collection(dbTables.USERS)
-    .where('uid', '==', userId).get()
-    .then( (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(JSON.stringify(doc.data()))
-            sharedSettings.currentUser = doc.data()
-            next()
+function fetchUser(userId) {
+    return new Promise((resolve, reject) => {
+        db
+        .collection(dbTables.USERS)
+        .where('uid', '==', userId).get()
+        .then( (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                console.log(JSON.stringify(doc.data()))
+                sharedSettings.currentUser = doc.data()
+                resolve()
+            })
         })
+        .catch(error => {
+            console.log("Error getting document:", error);
+            reject()
+        });
     })
-    .catch(error => {
-        console.log("Error getting document:", error);
-      });
 }
 
 const sharedSettings = {
