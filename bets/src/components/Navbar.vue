@@ -12,11 +12,10 @@
                 <i class="material-icons right">arrow_drop_down</i>
                 </span>
               </li>
-            <li><router-link to="/leagues"><span class="nav-items">STANDINGS</span></router-link></li>
+            <li><router-link to="/standings"><span class="nav-items">STANDINGS</span></router-link></li>
             <li><router-link to="/leagues"><span class="nav-items">PREDICTIONS</span></router-link></li>
             <li><router-link to="/leagues"><span class="nav-items">RESULTS</span></router-link></li>
-            <li><router-link to="/leagues"><span class="nav-items">TABLES</span></router-link></li>
-            <!-- <li v-if="isLoggedIn"><button v-on:click="logout" class="btn black">Logout</button></li> -->
+            <li><router-link to="/tables"><span class="nav-items">TABLES</span></router-link></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
             <li v-if="isLoggedIn"><router-link to="/">Dashboard</router-link></li>

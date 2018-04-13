@@ -7,6 +7,8 @@ import Dashboard from '@/components/Dashboard'
 import Leagues from '@/components/Leagues'
 import AddLeague from '@/components/AddLeague'
 import ViewLeague from '@/components/ViewLeague'
+import Standings from '@/components/Standings'
+import Tables from '@/components/Tables'
 
 Vue.use(Router)
 
@@ -49,6 +51,22 @@ let router = new Router({
       path: '/leagues/add',
       name: 'AddLeague',
       component: AddLeague,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/standings',
+      name: 'Standings',
+      component: Standings,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/tables',
+      name: 'Tables',
+      component: Tables,
       meta: {
         requiresAuth: true
       }

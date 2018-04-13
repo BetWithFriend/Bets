@@ -22,3 +22,105 @@ body {
     transform: translateY(-50%) translateX(-50%);
     left:50%;
 }
+
+.grey.lighten-4 {
+    background-color: #f4f9ffbb !important;
+    border-radius: 5px;
+}
+
+.td, th {
+    background: #7BB4F7;
+    color: #f4f9ff;
+    text-align: center;
+    border-radius: 0px;
+    font-weight: lighter;
+}
+
+.predictions-table, td {
+    text-align: center;
+}
+
+.standings-table, td, th {
+    text-align: left;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table.striped>tbody>tr:nth-child(even) {
+    background: #dedede;
+    border-bottom: 2px solid #c7c6c6;
+}
+
+.standings-up {
+    color: #73d321;
+}
+
+.standings-down {
+    color: #d0021b;
+}
+
+table.standings-table > tbody > tr > td:first-child {
+    padding-left: 15px;
+} 
+
+/* 
+    Tables Tabs 
+*/
+.tables-tabs {
+    padding-bottom: 15px;
+}
+
+.tables-tabs > ul.tabs {
+    background: #7BB4F7;
+}
+
+.tables-tabs > .tabs .tab a.active {
+    color: #FFF;
+}
+
+.tables-tabs > .tabs .tab a:hover {
+    color: #FFF;
+}
+
+.tables-tabs > .tabs .tab a {
+    color: #f4f9ffbb;
+}
+
+.tables-tabs > .tabs .indicator {
+    background-color: #2B689C;
+}
+
+/* 
+    Groups Tabs
+*/
+
+.groups-tabs {
+    
+}
+
+.groups-tabs > ul.tabs {
+    background: #FFF;
+    padding-bottom: 15px;
+}
+
+.groups-tabs > .tabs .tab a.active {
+    color: #2B689C;
+}
+
+.groups-tabs > .tabs .tab a:hover {
+    color: #2B689C;
+}
+
+.groups-tabs > .tabs .tab a {
+    color: #7BB4F7;
+}
+.groups-tabs > .tabs .indicator {
+    background-color: #2B689C;
+}
+
+.groups-container {
+    background: white;
+    padding: 15px 10px 15px 10px;
+}
