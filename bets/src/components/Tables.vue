@@ -53,54 +53,76 @@
                             </ul>
                         </div>
                         <div id="group-a" class="groups-container col s12">
-                            <table class="standings-table striped responsive-table">
+                            <table class="group-table responsive-table">
                                 <thead>
                                     <tr>
-                                        <th>Rank</th>
-                                        <th>Player</th>
-                                        <th>Total</th>
+                                        <th>Teams</th>
+                                        <th>MP</th>
+                                        <th>W</th>
+                                        <th>D</th>
+                                        <th>L</th>
+                                        <th>GF</th>
+                                        <th>GA</th>
+                                        <th>+/-</th>
+                                        <th>PTS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Yanay Hollander</td>
                                         <td class="row">
-                                            <div class="col s3">132</div>
-                                            <div class="col s9">
-                                                <span class="standings-up">+2</span>
-                                            </div>
+                                            <div class="col s2"><img src="../assets/logo.png"/></div>
+                                            <div class="col s10">Uruguay</div>
                                         </td>
+                                        <td class="row">0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Shai Shiloni</td>
+                                     <tr>
                                         <td class="row">
-                                            <div class="col s3">80</div>
-                                            <div class="col s9">
-                                                <span class="standings-down">-4</span>
-                                            </div>
+                                            <div class="col s2"><img src="../assets/logo.png"/></div>
+                                            <div class="col s10">Russia</div>
                                         </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
                                     </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Ido Geled</td>
+                                     <tr>
                                         <td class="row">
-                                            <div class="col s3">-10</div>
-                                            <div class="col s9">
-                                                <span class="standings-down">-2</span>
-                                            </div>
+                                            <div class="col s2"><img src="../assets/logo.png"/></div>
+                                            <div class="col s10">Saudi Arabia</div>
                                         </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
                                     </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Ido Geled</td>
+                                     <tr>
                                         <td class="row">
-                                            <div class="col s3">-10</div>
-                                            <div class="col s9">
-                                                <span class="standings-down">-2</span>
-                                            </div>
+                                            <div class="col s2"><img src="../assets/logo.png"/></div>
+                                            <div class="col s10">Egypt</div>
                                         </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
                                     </tr>
                                 </tbody>
                             </table>

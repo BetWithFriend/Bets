@@ -96,10 +96,6 @@ table.standings-table > tbody > tr > td:first-child {
     Groups Tabs
 */
 
-.groups-tabs {
-    
-}
-
 .groups-tabs > ul.tabs {
     background: #FFF;
     padding-bottom: 15px;
@@ -123,4 +119,21 @@ table.standings-table > tbody > tr > td:first-child {
 .groups-container {
     background: white;
     padding: 15px 10px 15px 10px;
+}
+
+/* 
+ group-table
+*/
+
+.group-table > thead > tr > th  {
+    background: #FFF;
+    color: #58595B;
+    font-weight: normal;
+    font-size: 10pt;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+}
+
+.group-table > tbody > tr {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
 }
