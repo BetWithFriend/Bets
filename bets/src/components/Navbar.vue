@@ -21,7 +21,7 @@
           <ul class="side-nav" id="mobile-demo">
             <li v-if="isLoggedIn"><router-link to="/">Dashboard</router-link></li>
             <li><a href="#" class="divider"></a></li>
-             <li v-if="isLoggedIn"><button v-on:click="logout" class="btn">Logout</button></li>
+             <li v-if="isLoggedIn"></li>
           </ul>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <li class="collection-item ">ONE</li>
       <li class="collection-item ">ONE</li>
       <li class="collection-item ">ONE</li>
-      <li class="collection-item ">ONE</li>
+      <li class="collection-item " v-on:click="logout">Logout</li>
     </ul>
     </nav>
   </template>
@@ -66,9 +66,9 @@ export default {
           })
         });
 
-      if (this.currentUser == "yanayh90@gmail.com") {
+      // if (this.currentUser == "yanayh90@gmail.com") {
         this.isAdmin = true;
-      }
+      // }
     }
   
   },
