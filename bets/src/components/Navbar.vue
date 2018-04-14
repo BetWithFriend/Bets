@@ -1,6 +1,6 @@
 <template>
-  <nav v-if="isLoggedIn">
-    <div class="nav-wrapper main-navbar">
+  <nav v-if="isLoggedIn" class="main-navbar">
+    <div class="nav-wrapper">
       <div class="container">
 
         <!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a> -->
@@ -34,9 +34,9 @@
               <span class="nav-items">TABLES</span>
             </router-link>
           </li>
-          <li v-if="isAdmin">
+          <li v-if="isLoggedIn">
             <router-link to="/leagues">
-              <span class="nav-items">TABLES</span>
+              <span class="nav-items">LEAGUES</span>
             </router-link>
           </li>
         </ul>
@@ -53,19 +53,24 @@
     </div>
     <!-- Dropdown Structure -->
     <ul id="dropdown" class="dropdown-content collection">
-      <li class="collection-item ">ONE</li>
-      <li class="collection-item ">ONE</li>
-      <li class="collection-item ">ONE</li>
-      <li class="collection-item " v-on:click="logout">Logout</li>
+      <li class="collection-item collection-header">My Tournaments</li>
+      <userLeagues></userLeagues>
+      <li class="divider"></li>
+      <li class="collection-item collection-header">Create Tournament</li>
+      <li class="collection-item collection-header">Join Tournament</li>
+      <li class="divider"></li>
+      <li class="collection-item  collection-header" v-on:click="logout">Sign Out</li>
     </ul>
   </nav>
 </template>
 
 <script>
+import Vue from "vue";
 import firebase from "firebase";
 import db from "./firebase/firebaseInit";
 import dbTables from "./firebase/firebaseTables";
 import dbConsts from "./firebase/firebaseConsts";
+import helper from "../Helper/helper";
 
 export default {
   name: "navbar",
@@ -75,38 +80,39 @@ export default {
       isLoggedIn: false,
       currentUser: "",
       isAdmin: false,
-      currentUserId: false
+      currentUserId: false,
+      currentUserEmail: "",
+      userLeagues: false
     };
   },
   created() {
     if (firebase.auth().currentUser) {
-      this.currentUserId = firebase.auth().currentUser.uid;
-      this.isLoggedIn = true;
+      let user = JSON.parse(helper.getItem ('user'));
+      if(user) {
+        this.currentUser = user.name;
+        this.isLoggedIn = true;
+        this.getUserLeagues(user);
+      } else {
+        this.currentUserEmail = firebase.auth().currentUser.email;
+        this.isLoggedIn = true;
       db
         .collection(dbTables.USERS)
-        .where("uid", "==", this.currentUserId)
+        .where("email", "==", this.currentUserEmail)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             this.currentUser = doc.data().name;
-            $(".dropdown-button").dropdown();
-
-            db
-              .collection(dbTables.LEAGUES)
-              .doc(dbConsts.ShutterflyLeague)
-              .get()
-              .then(doc => {
-                if (doc.exists) {
-                  doc.data().admins.forEach(admin => {
-                    if (admin == this.currentUserId) {
-                      this.isAdmin = true;
-                    }
-                  });
-                }
-              });
+            helper.setItem('user', doc.data());
+            this.getUserLeagues(user);
           });
         });
+      }
+      
     }
+    Vue.component('userLeagues', {
+      template: '<li class="collection-item">{{userLeague}}<li>',
+      props: this.userLeagues
+    });
   },
   methods: {
     logout: function() {
@@ -116,6 +122,18 @@ export default {
         .then(() => {
           this.$router.go({ path: this.$router.path });
         });
+    },
+    getUserLeagues: function(user) {
+    //get the user leagues
+    db
+      .collection(dbTables.LEAGUES)
+      .doc(dbConsts.ShutterflyLeagueId)
+      .get()
+      .then(doc => {
+        console.log(doc.data().name)
+        this.userLeagues = doc.data().name;
+        $(".dropdown-button").dropdown();
+      });
     }
   }
 };
@@ -127,9 +145,15 @@ export default {
 }
 
 .main-navbar {
-  background-color: #f4f9ff;
+  background-color:#f4f9ff;
+  height: 50px;
+  line-height: 50px;
 }
 nav ul a .nav-items {
   color: #25262b;
+}
+.icon-arrow-down {
+  height: 50px;
+  line-height: 50px;
 }
 </style>
