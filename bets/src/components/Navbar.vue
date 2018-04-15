@@ -52,9 +52,9 @@
       </div>
     </div>
     <!-- Dropdown Structure -->
-    <ul id="dropdown" class="dropdown-content collection">
+    <ul id="dropdown" class="dropdown-content collection dropdown-menu">
       <li class="collection-item collection-header">My Tournaments</li>
-      <userLeagues :userLeagues="userLeagues"></userLeagues>
+      <li class="collection-item" v-for="league in userLeagues">{{league}}</li>
       <li class="divider"></li>
       <li class="collection-item collection-header">Create Tournament</li>
       <li class="collection-item collection-header">Join Tournament</li>
@@ -71,11 +71,6 @@ import db from "./firebase/firebaseInit";
 import dbTables from "./firebase/firebaseTables";
 import dbConsts from "./firebase/firebaseConsts";
 import helper from "../Helper/helper";
-
-Vue.component('userLeagues', {
-      template: '<li class="collection-item">{{userLeagues}}<li>',
-      props: ['userLeagues']
-    });
 
 export default {
   name: "navbar",
@@ -100,7 +95,7 @@ export default {
       } else {
         this.currentUserEmail = firebase.auth().currentUser.email;
         this.isLoggedIn = true;
-      db
+        db
         .collection(dbTables.USERS)
         .where("email", "==", this.currentUserEmail)
         .get()
@@ -108,12 +103,17 @@ export default {
           querySnapshot.forEach(doc => {
             this.currentUser = doc.data().name;
             helper.setItem('user', doc.data());
+            let user = doc.data()
             this.getUserLeagues(user);
+  
           });
         });
       }
       
     }
+  },
+  mounted() {
+    $(".dropdown-button").dropdown();
   },
   methods: {
     logout: function() {
@@ -121,18 +121,15 @@ export default {
         .auth()
         .signOut()
         .then(() => {
+          helper.removeItem('user');
           this.$router.go({ path: this.$router.path });
         });
     },
     getUserLeagues: function(user) {
-        console.log(user)
-   
-        user.leagues.forEach((league) => {
-          this.userLeagues.push(league.name)
-        })
-        
-        $(".dropdown-button").dropdown();
-     
+      user.leagues.forEach((league) => {
+        this.userLeagues.push(league.name)
+      })
+
     }
   }
 };
@@ -154,5 +151,14 @@ nav ul a .nav-items {
 .icon-arrow-down {
   height: 50px;
   line-height: 50px;
+}
+.dropdown-menu {
+  width: 190px !important;
+}
+.collection-header {
+  font-weight: bold;
+}
+.collection-item {
+  border-bottom: none;
 }
 </style>
