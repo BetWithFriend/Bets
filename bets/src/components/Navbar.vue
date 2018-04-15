@@ -54,7 +54,7 @@
     <!-- Dropdown Structure -->
     <ul id="dropdown" class="dropdown-content collection">
       <li class="collection-item collection-header">My Tournaments</li>
-      <userLeagues></userLeagues>
+      <userLeagues :userLeagues="userLeagues"></userLeagues>
       <li class="divider"></li>
       <li class="collection-item collection-header">Create Tournament</li>
       <li class="collection-item collection-header">Join Tournament</li>
@@ -72,6 +72,11 @@ import dbTables from "./firebase/firebaseTables";
 import dbConsts from "./firebase/firebaseConsts";
 import helper from "../Helper/helper";
 
+Vue.component('userLeagues', {
+      template: '<li class="collection-item">{{userLeagues}}<li>',
+      props: ['userLeagues']
+    });
+
 export default {
   name: "navbar",
 
@@ -82,7 +87,7 @@ export default {
       isAdmin: false,
       currentUserId: false,
       currentUserEmail: "",
-      userLeagues: false
+      userLeagues: []
     };
   },
   created() {
@@ -109,10 +114,6 @@ export default {
       }
       
     }
-    Vue.component('userLeagues', {
-      template: '<li class="collection-item">{{userLeague}}<li>',
-      props: this.userLeagues
-    });
   },
   methods: {
     logout: function() {
@@ -124,16 +125,14 @@ export default {
         });
     },
     getUserLeagues: function(user) {
-    //get the user leagues
-    db
-      .collection(dbTables.LEAGUES)
-      .doc(dbConsts.ShutterflyLeagueId)
-      .get()
-      .then(doc => {
-        console.log(doc.data().name)
-        this.userLeagues = doc.data().name;
+        console.log(user)
+   
+        user.leagues.forEach((league) => {
+          this.userLeagues.push(league.name)
+        })
+        
         $(".dropdown-button").dropdown();
-      });
+     
     }
   }
 };
