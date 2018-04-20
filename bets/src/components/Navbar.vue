@@ -54,7 +54,7 @@
     <!-- Dropdown Structure -->
     <ul id="dropdown" class="dropdown-content collection dropdown-menu">
       <li class="collection-item collection-header">My Tournaments</li>
-      <li class="collection-item" v-for="league in userLeagues">{{league}}</li>
+      <li class="collection-item" :key="index" v-for="(league, index) in userLeagues">{{league}}</li>
       <li class="divider"></li>
       <li class="collection-item collection-header">Create Tournament</li>
       <li class="collection-item collection-header">Join Tournament</li>
