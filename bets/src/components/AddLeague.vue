@@ -6,7 +6,11 @@
         <div class="row">
           <div class="input-field col s12">
             <input type="text" v-model="name" required>
-            <label>Name</label>
+            <label>League Name</label>
+          </div>
+          <div class="input-field col s12 chips-initial">
+            <input type="email" class="validate" v-model="emails" required>
+            <label>Friend's Email</label>
           </div>
         </div>
         <button type="submit" class="btn">Submit</button>
@@ -19,13 +23,22 @@
 <script>
 import db from "./firebase/firebaseInit";
 import dbTables from "./firebase/firebaseTables";
+import helper from "../Helper/helper";
 
 export default {
   name: "add-league",
   data() {
     return {
-      name: null
+      name: null,
+      emails: []
     };
+  },
+  mounted() {
+    $('.chips-initial').material_chip({
+      data: [{
+        tag: this.getUserEmail(),
+      }],
+  });
   },
   methods: {
     saveLeague() {
@@ -55,6 +68,9 @@ export default {
         .catch(error => {
           console.log("Error getting document:", error);
         });
+    },
+    getUserEmail () {
+      return  helper.getEmail('user');
     }
   }
 };

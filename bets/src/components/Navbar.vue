@@ -53,11 +53,13 @@
     </div>
     <!-- Dropdown Structure -->
     <ul id="dropdown" class="dropdown-content collection dropdown-menu">
-      <li class="collection-item collection-header">My Tournaments</li>
+      <li class="collection-item collection-header">My Leagues</li>
       <li class="collection-item" v-for="league in userLeagues">{{league}}</li>
       <li class="divider"></li>
-      <li class="collection-item collection-header">Create Tournament</li>
-      <li class="collection-item collection-header">Join Tournament</li>
+      <router-link v-bind:to="{ name: 'AddLeague'}">
+        <li class="collection-item collection-header">Create League</li>
+      </router-link>
+      <li class="collection-item collection-header" v-on:click="join">Join League</li>
       <li class="divider"></li>
       <li class="collection-item  collection-header" v-on:click="logout">Sign Out</li>
     </ul>
@@ -129,7 +131,9 @@ export default {
       user.leagues.forEach((league) => {
         this.userLeagues.push(league.name)
       })
-
+    },
+    join: function () {
+      Materialize.toast('Join League')
     }
   }
 };
