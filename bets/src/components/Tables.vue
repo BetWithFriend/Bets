@@ -161,11 +161,15 @@ export default {
     }
   },
   mounted: function() {
-    this.getTables()
-    .then(res => res.text())
-    .then(body => {
-        console.log("print body")
-    });
+    $.getJSON('http://www.skysports.com/world-cup-table')
+     .done(function(data) {
+        console.log("DDD=" + data);
+     });
+//    this.getTables()
+//    .then(res => res.text())
+//    .then(body => {
+//        console.log("print body")
+//    });
   },
   created: function() {
     $(document).ready(function() {
