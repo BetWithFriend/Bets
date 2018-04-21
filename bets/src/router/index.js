@@ -9,6 +9,7 @@ import AddLeague from '@/components/AddLeague'
 import ViewLeague from '@/components/ViewLeague'
 import Standings from '@/components/Standings'
 import Tables from '@/components/Tables'
+import Predictions from '@/components/Predictions'
 
 Vue.use(Router)
 
@@ -67,6 +68,14 @@ let router = new Router({
       path: '/tables',
       name: 'Tables',
       component: Tables,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/predictions',
+      name: 'Predictions',
+      component: Predictions,
       meta: {
         requiresAuth: true
       }
