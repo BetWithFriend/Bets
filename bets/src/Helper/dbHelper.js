@@ -5,13 +5,13 @@ import dbConsts from "../components/firebase/firebaseConsts";
 
 export default {
 
-  getUserPredictionInLeague(userId, leagueId, turnamentId, next) {
+  getUserPredictionInLeague(userId, leagueId, tournamentId, next) {
 
     db
       .collection(dbTables.PREDICTIONS)
       .where("userId", "==", userId)
       .where("leagueId", "==", leagueId)
-      .where("turnamentId", "==", turnamentId)
+      .where("tournamentId", "==", tournamentId)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(prediction => {
@@ -23,12 +23,12 @@ export default {
       });
   },
 
-  getLeagueTable(leagueId, turnamentId, next) {
+  getLeagueTable(leagueId, tournamentId, next) {
 
     db
     .collection(dbTables.LEAGUES)
     .where("uid", "==", leagueId)
-    .where("turnament", "==", turnamentId)
+    .where("tournamentId", "==", tournamentId)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(league => {
