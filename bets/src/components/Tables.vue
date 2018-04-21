@@ -147,30 +147,22 @@
 </template>
 
 <script>
-var fetch = require('node-fetch');
 
 
 export default {
   name: "tables",
-  data() {
-    tables: []
+
+  data: {
+      tables: []
   },
-  methods: {
-    getTables: function () {
-         return fetch('http://www.skysports.com/world-cup-table');
-    }
-  },
+
   mounted: function() {
-    $.getJSON('http://www.skysports.com/world-cup-table')
-     .done(function(data) {
-        console.log("DDD=" + data);
-     });
-//    this.getTables()
-//    .then(res => res.text())
-//    .then(body => {
-//        console.log("print body")
-//    });
+      this.$http.get('https://reqres.in/api/users').then(response => {
+          var data = response.body.data;
+          console.log("DDD=" + JSON.stringify(data[0]));
+      });
   },
+
   created: function() {
     $(document).ready(function() {
       $(".tabs").tabs();
