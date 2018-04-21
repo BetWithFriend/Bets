@@ -21,6 +21,9 @@
 
 <script>
 import PredictionListItem from "./PredictionListItem.vue";
+import dbHelper from "../Helper/dbHelper";
+import dbConsts from "./firebase/firebaseConsts";
+
 export default {
   name: "predictions",
   components: {
@@ -32,28 +35,31 @@ export default {
     };
   },
   created() {
-    var a = {
-        uid: "uid1",
-      team1name: "Uruguay",
-      team1score: 2,
-      team2name: "Russia",
-      team2score: 1,
-      group: "A",
-      matchDay: "June 14, 2018 14:00"
-    };
+    var userId = "76MaFUs7EcVnzXNWAFgFPMdmwTv1";
+    var leagueId = dbConsts.ShutterflyLeagueId;
+    var turnamentId = dbConsts.Worldcup2018TurnamentId;
 
-    var b = {
-        uid: "uid2",
-      team1name: "Uruguay",
-      team1score: 4,
-      team2name: "Egypt",
-      team2score: 0,
-      group: "A",
-      matchDay: "June 17, 2018 14:00"
-    };
+    dbHelper.getUserPredictionInLeague(
+      userId,
+      leagueId,
+      turnamentId,
+      prediction => {
+        prediction.forEach(element => {
 
-    this.predictions.push(a);
-    this.predictions.push(b);
+          const temp = {
+            team1name: element.team1name,
+            team1score: element.team1score,
+            team2name: element.team2name,
+            team2score: element.team2score,
+            group: element.group,
+            matchDay: element.matchDay
+          };
+
+          this.predictions.push(temp);
+
+        }, this);
+      }
+    );
   }
 };
 </script>
