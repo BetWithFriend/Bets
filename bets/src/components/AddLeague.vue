@@ -9,8 +9,7 @@
             <label>League Name</label>
           </div>
           <div class="input-field col s12 chips-initial">
-            <input type="email" class="validate" v-model="emails" required>
-            <label>Friend's Email</label>
+            <input type="email"  v-model="emails">
           </div>
         </div>
         <button type="submit" class="btn">Submit</button>
@@ -30,19 +29,29 @@ export default {
   data() {
     return {
       name: null,
-      emails: []
+      adminId: helper.getUserId('user'),
+      adminMail: helper.getEmail('user'),
+      adminName: helper.getName('user'),
+      emails: [],
+      playerList: []
     };
   },
   mounted() {
     $('.chips-initial').material_chip({
       data: [{
-        tag: this.getUserEmail(),
+        tag: this.adminMail,
       }],
+  });
+    $('.chips-placeholder').material_chip({
+      placeholder: '+Friend\'s Email',
+      secondaryPlaceholder: '+Friend\'s Email',
   });
   },
   methods: {
     saveLeague() {
       const tempName = this.name;
+      const emails = this.getPlayersEmail(this.adminName);
+      // let playersList = this.createPlayersList(this.emails);
       db
         .collection(dbTables.LEAGUES)
         .where("name", "==", tempName)
@@ -53,11 +62,17 @@ export default {
           } else {
             db
               .collection("leagues")
+              // console.log(this.playerList)
               .add({
-                name: tempName
+                name: tempName,
+                admins: {
+                  id: this.adminId,
+                  email: this.adminMail
+                },
+                players: emails
               })
-              .then(docRef => {
-                console.log("League added: ", docRef.id);
+              .then(league => {
+                console.log("League added: ", league.id);
                 this.$router.push({ name: "Leagues", params: { userId: 123 } });
               })
               .catch(error => {
@@ -69,8 +84,19 @@ export default {
           console.log("Error getting document:", error);
         });
     },
-    getUserEmail () {
-      return  helper.getEmail('user');
+    getPlayersEmail(adminName) {
+      var emailList = {}
+      $('.chips-initial').material_chip('data').forEach(function (pUser, idx) {
+        emailList[idx] = {};
+        emailList[idx]['email'] = pUser.tag;
+        if(idx == 0) {
+          emailList[idx]['name'] = adminName
+        } else {
+          emailList[idx]['name'] = "";
+        }
+          
+      });
+      return emailList;
     }
   }
 };
